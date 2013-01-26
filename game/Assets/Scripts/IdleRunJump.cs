@@ -6,7 +6,7 @@ public class IdleRunJump : MonoBehaviour {
 
 	protected Animator animator;
 	public float DirectionDampTime = .25f;
-	public bool ApplyGravity = true; 
+	public bool ApplyGravity = true;
 
 	// Use this for initialization
 	void Start () 
@@ -17,6 +17,13 @@ public class IdleRunJump : MonoBehaviour {
 			animator.SetLayerWeight(1, 1);
 	}
 		
+	void OnTriggerEnter (Collider coll)
+	{
+		if(coll.CompareTag("Climb Trigger")){
+			animator.SetBool("Climb", true);
+		}
+	}
+	
 	// Update is called once per frame
 	void Update () 
 	{
@@ -33,13 +40,16 @@ public class IdleRunJump : MonoBehaviour {
 			{
 				animator.SetBool("Jump", false);                
             }
-
+			
+			if (stateInfo.IsName("Base Layer.Jump up")){
+				animator.SetBool("Climb", false);
+			}
+			
 			if(Input.GetButtonDown("Jump") && animator.layerCount >= 2)
 			{
 				animator.SetBool("Hi", !animator.GetBool("Hi"));
 			}
 			
-		
       		float h = Input.GetAxis("Horizontal");
         	float v = Input.GetAxis("Vertical");
 			
