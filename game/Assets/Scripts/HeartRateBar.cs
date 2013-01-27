@@ -9,6 +9,7 @@ public class HeartRateBar : MonoBehaviour {
     public Texture2D progressBarBackground;
 	public Texture line;
 	public Rect position;
+	public InputControl control;
 	
     void OnGUI()
     {	     
@@ -19,7 +20,7 @@ public class HeartRateBar : MonoBehaviour {
 	    GUI.Box(position, progressBarBackground);
 	     
 	    // draw the filled-in part:
-	    GUI.BeginGroup(new Rect(heartRate, 0.0f, 1.0f, size.y));
+	    GUI.BeginGroup(new Rect(heartRate * size.x, 0.0f, 1.0f, size.y));
 	    GUI.Box(position, line);
 	    GUI.EndGroup();
 	    GUI.EndGroup();
@@ -27,9 +28,6 @@ public class HeartRateBar : MonoBehaviour {
      
     void Update()
     {
-	    // for this example, the bar display is linked to the current time,
-	    // however you would set this value based on your desired display
-	    // eg, the loading progress, the player's health, or whatever.
-		heartRate++;
+	    heartRate = control.HeartRate;
     }
 }

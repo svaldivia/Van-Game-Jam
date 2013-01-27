@@ -9,9 +9,11 @@ public class InputControl : MonoBehaviour {
 	public float TurnSpeed;
 	public float JumpForce;
 	private float mRotation = 0;
-	public int HeartRateChangeRate = 0;
+	public float HeartRateChangeRate = 0.01f;
 	private bool Jumping = false;
 	public float JumpTime;
+	private float timer = 0.25f;
+	public float AnimatorSpeed;
 	
 	// Use this for initialization
 	void Start() 
@@ -25,6 +27,13 @@ public class InputControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update() 
 	{
+		
+		HeartRate += HeartRateChangeRate * Time.deltaTime * Mathf.Sign(HeartRate - 0.5f);
+		if(HeartRate < 0 || HeartRate > 1)
+		{
+			rigidbody.AddForce(new Vector3(0, JumpForce,0));
+		}
+		
 		if (animator)
 		{	
 			
@@ -39,18 +48,23 @@ public class InputControl : MonoBehaviour {
 				}
 			}
 			
+			animator.SetBool("Jump", false);
+			
 			if (stateInfo.IsName("Base Layer.Run"))
 			{
 				if (Input.GetKey(KeyCode.Space))
 				{
 					animator.SetBool("Jump", true);
 					Jumping = true;
+					
 				}
+				animator.speed = Mathf.Sqrt(HeartRate * 2);
 			}
 			else
 			{
-				animator.SetBool("Jump", false);
+				animator.speed = AnimatorSpeed;	
 			}
+			
 						
 			if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
 			{
