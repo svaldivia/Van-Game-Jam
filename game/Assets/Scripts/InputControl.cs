@@ -7,8 +7,11 @@ public class InputControl : MonoBehaviour {
 	public float DirectionDampTime = .25f;
 	public float HeartRate = 0.01f;
 	public float TurnSpeed;
+	public float JumpForce;
 	private float mRotation = 0;
 	public int HeartRateChangeRate = 0;
+	private bool Jumping = false;
+	public float JumpTime;
 	
 	// Use this for initialization
 	void Start() 
@@ -27,11 +30,21 @@ public class InputControl : MonoBehaviour {
 			
 			AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);			
 			
+			if(stateInfo.IsName("Base Layer.Jump") && Jumping)
+			{
+				if(stateInfo.normalizedTime > JumpTime)
+				{
+					rigidbody.AddForce(new Vector3(0,JumpForce,0));
+					Jumping = false;
+				}
+			}
+			
 			if (stateInfo.IsName("Base Layer.Run"))
 			{
 				if (Input.GetKey(KeyCode.Space))
 				{
 					animator.SetBool("Jump", true);
+					Jumping = true;
 				}
 			}
 			else
