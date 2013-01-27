@@ -1,3 +1,4 @@
 game/Library/*
 game/Temp/*
+Assembly-CSharp.csproj
 .DS_Store
