@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+	<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+	<ProductVersion>10.0.20506</ProductVersion>
+	<SchemaVersion>2.0</SchemaVersion>
+	<ProjectGuid>{675B4165-6670-44F6-3857-47F64BA725EC}</ProjectGuid>
+	<OutputType>Library</OutputType>
+	<AppDesignerFolder>Properties</AppDesignerFolder>
+	<RootNamespace></RootNamespace>
+	<AssemblyName>Assembly-UnityScript</AssemblyName>
+	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+	<FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	<DebugSymbols>true</DebugSymbols>
+	<DebugType>full</DebugType>
+	<Optimize>false</Optimize>
+	<OutputPath>Temp\bin\Debug\</OutputPath>
+	<DefineConstants>DEBUG;TRACE;UNITY_STANDALONE;ENABLE_MICROPHONE;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;ENABLE_AUDIO_FMOD;ENABLE_NETWORK;ENABLE_MONO;ENABLE_PHYSICS;ENABLE_TERRAIN;ENABLE_CACHING;ENABLE_SUBSTANCE;ENABLE_GENERICS;ENABLE_CLOTH;ENABLE_MOVIES;ENABLE_AUDIO;ENABLE_WWW;ENABLE_SHADOWS;ENABLE_DUCK_TYPING;UNITY_4_0_0;UNITY_4_0;UNITY_STANDALONE_WIN;ENABLE_PROFILER;UNITY_EDITOR;UNITY_TEAM_LICENSE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	<DebugType>pdbonly</DebugType>
+	<Optimize>true</Optimize>
+	<OutputPath>Temp\bin\Release\</OutputPath>
+	<DefineConstants>TRACE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+	<Reference Include="System" />
+    <Reference Include="System.XML" />
+	<Reference Include="System.Core" />
+	<Reference Include="UnityEngine">
+	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEngine.dll</HintPath>
+	</Reference>
+	<Reference Include="UnityEditor">
+	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.dll</HintPath>
+	</Reference>
+  </ItemGroup>
+  <ItemGroup>
+     <Compile Include="Assets\Detonator Explosion Framework\Sample Supporting Emitters\Detonator Spray Helper.js" />
+     <Compile Include="Assets\Detonator Explosion Framework\TestScene\DetonatorTest.js" />
+     <Compile Include="Assets\Scripts\Fx\ColoredNoise.js" />
+     <Compile Include="Assets\Scripts\Fx\HeightDepthOfField.js" />
+     <Compile Include="Assets\Scripts\Fx\MobileBloom.js" />
+     <Compile Include="Assets\Scripts\Fx\MoodBox.js" />
+     <Compile Include="Assets\Scripts\Fx\MoodBoxData.js" />
+     <Compile Include="Assets\Scripts\Fx\MoodBoxManager.js" />
+     <Compile Include="Assets\Scripts\Fx\PostEffects.js" />
+     <Compile Include="Assets\Scripts\Fx\QualityManager.js" />
+     <Compile Include="Assets\Scripts\Fx\RenderFogPlane.js" />
+     <Compile Include="Assets\Scripts\Fx\ShaderDatabase.js" />
+     <Compile Include="Assets\Scripts\Managers\TextAdventureManager.js" />
+     <Compile Include="Assets\Scripts\Misc\EndOfLevel.js" />
+     <Compile Include="Assets\Scripts\Misc\PlaySoundOnTrigger.js" />
+     <Compile Include="Assets\Scripts\Misc\ReBirth.js" />
+     <Compile Include="Assets\Scripts\Misc\ShowFps.js" />
+     <Compile Include="Assets\Scripts\Misc\SimpleRotate.js" />
+     <Compile Include="Assets\Scripts\Misc\StaticFollower.js" />
+     <Compile Include="Assets\Scripts\Rain\Movement\CameraControl.js" />
+     <Compile Include="Assets\Scripts\Rain\Movement\FreeMovementMotor.js" />
+     <Compile Include="Assets\Scripts\Rain\Movement\HoverMovementMotor.js" />
+     <Compile Include="Assets\Scripts\Rain\Movement\Joystick.js" />
+     <Compile Include="Assets\Scripts\Rain\Movement\KamikazeMovementMotor.js" />
+     <Compile Include="Assets\Scripts\Rain\Movement\MechMovementMotor.js" />
+     <Compile Include="Assets\Scripts\Rain\Movement\MovementMotor.js" />
+     <Compile Include="Assets\Scripts\Rain\Movement\PlayerMoveController.js" />
+     <Compile Include="Assets\Scripts\Rain\RainBox.js" />
+     <Compile Include="Assets\Scripts\Rain\RainManager.js" />
+     <Compile Include="Assets\Scripts\Rain\RainsplashBox.js" />
+     <Compile Include="Assets\Scripts\Rain\RainsplashManager.js" />
+     <None Include="Assets\Shaders\Fx\Rain.shader" />
+     <None Include="Assets\Shaders\BackgroundAndCharacters\RealtimeReflectionInWaterFlow.shader" />
+     <None Include="Assets\Shaders\Fx\Cursor.shader" />
+     <None Include="Assets\Shaders\Fx\ParticleAdditiveBlend.shader" />
+     <None Include="Assets\Shaders\Fx\AdditiveBlend.shader" />
+     <None Include="Assets\Shaders\BackgroundAndCharacters\RealtimeReflectionReplacement.shader" />
+     <None Include="Assets\Shaders\Fx\Additive.shader" />
+     <None Include="Assets\Shaders\BackgroundAndCharacters\ReflectiveBackgroundArbitrary.shader" />
+     <None Include="Assets\Shaders\BackgroundAndCharacters\ReflectiveBackgroundSelfIllumination.shader" />
+     <None Include="Assets\Shaders\Fx\ScreenRefract.shader" />
+     <None Include="Assets\Shaders\Fx\RainSplash.shader" />
+     <None Include="Assets\Shaders\BackgroundAndCharacters\Fallback.shader" />
+     <None Include="Assets\Shaders\Fx\Multiply.shader" />
+     <None Include="Assets\Detonator Explosion Framework\Resources\Detonator\Textures\HeatDistort.shader" />
+     <None Include="Assets\Shaders\Fx\Blend.shader" />
+     <None Include="Assets\Shaders\Fx\HeightFogBeforeTransparent.shader" />
+     <None Include="Assets\Shaders\BackgroundAndCharacters\CharacterSelfIlluminationReflective.shader" />
+     <None Include="Assets\Shaders\Fx\InterlacePatternBlend.shader" />
+     <None Include="Assets\Shaders\BackgroundAndCharacters\PlanarRealtimeReflection.shader" />
+     <None Include="Assets\Shaders\BackgroundAndCharacters\ReflectiveBackgroundPlanar.shader" />
+     <None Include="Assets\Shaders\BackgroundAndCharacters\EnemySelfIlluminationReflective.shader" />
+     <None Include="Assets\Shaders\BackgroundAndCharacters\AngryInclude.cginc" />
+     <None Include="Assets\Shaders\Fx\ParticleMultiply.shader" />
+     <None Include="Assets\Shaders\Fx\ParticleAdditive.shader" />
+     <None Include="Assets\Shaders\BackgroundAndCharacters\AlphaCutoutCheapFallback.shader" />
+     <None Include="Assets\Shaders\Fx\LaserScope.shader" />
+     <None Include="Assets\Shaders\BackgroundAndCharacters\SuperSimpleSelfIllumination.shader" />
+     <None Include="Assets\Shaders\Fx\ParticleBlend.shader" />
+     <None Include="Assets\Shaders\Fx\InterlacePatternAdditive.shader" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	   Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  
+</Project>
