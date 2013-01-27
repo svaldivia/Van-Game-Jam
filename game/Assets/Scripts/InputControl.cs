@@ -19,6 +19,7 @@ public class InputControl : MonoBehaviour {
 	public AudioSource HeartBeatSource;
 	public AnimationCurve HeartBeatCurve;
 	public string GameOverSceneName = "GameOverMenu";
+	public PhotonView view = null;
 	
 	// Use this for initialization
 	void Start() 
@@ -48,15 +49,17 @@ public class InputControl : MonoBehaviour {
 	{
 		
 		//HeartBeatSource.pitch = HeartBeatCurve.Evaluate(HeartRate);
-			
-		HeartRate += Time.deltaTime * ((HeartRate - 0.5f) * HeartRateChangeRate + (MinHeartRateChange * Mathf.Sign(HeartRate - 0.5f)) );
-		if((HeartRate < 0 || HeartRate > 1) && ((Application.loadedLevelName != "Menu") && (Application.loadedLevelName != "GameOverMenu")))
+		if (view != null && view.isMine)
 		{
-			rigidbody.AddForce(new Vector3(0, JumpForce,0));
-			StartCoroutine(LoadLevel(3));			
+			HeartRate += Time.deltaTime * ((HeartRate - 0.5f) * HeartRateChangeRate + (MinHeartRateChange * Mathf.Sign(HeartRate - 0.5f)) );
+			if((HeartRate < 0 || HeartRate > 1) && ((Application.loadedLevelName != "Menu") && (Application.loadedLevelName != "GameOverMenu")))
+			{
+				rigidbody.AddForce(new Vector3(0, JumpForce,0));
+				StartCoroutine(LoadLevel(3));			
+			}
 		}
 		
-		if (animator)
+		if (view != null && animator && view.isMine)
 		{	
 			
 			AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);			
@@ -81,7 +84,7 @@ public class InputControl : MonoBehaviour {
 					
 				}
 				animator.speed = EffectiveHeartRate;
-				Debug.Log(EffectiveHeartRate);	
+				//Debug.Log(EffectiveHeartRate);	
 			}
 			else
 			{
