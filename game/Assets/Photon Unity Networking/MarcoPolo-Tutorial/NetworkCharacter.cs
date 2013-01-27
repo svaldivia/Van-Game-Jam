@@ -10,13 +10,21 @@ public class NetworkCharacter : Photon.MonoBehaviour
 	private bool mIsReady = false;
 	private static bool mGameOn = false;
 	public static Dictionary<int, NetworkCharacter> Characters = null;
+	public GUIText TextObject = null;
+	public string Text = "Press enter to ready up";
+	private int ReadyCount = 0;
 	
-		
     public void Awake()
     {
+		if (TextObject != null)
+		{
+			TextObject.text = Text;
+			if (!photonView.isMine)
+			{
+				TextObject.gameObject.SetActive(false);
+			}
+		}
 		
-	//ThirdPersonController myC = GetComponent<ThirdPersonController>();
-       // myC.isControllable = photonView.isMine;
 		if (Characters == null)
 		{
 			Characters = new Dictionary<int, NetworkCharacter>();
@@ -39,7 +47,15 @@ public class NetworkCharacter : Photon.MonoBehaviour
 		}
 		
     }
-
+	
+	public void OnDisable()
+	{
+		if (Characters.ContainsKey(photonView.viewID.ID))
+		{
+			Characters.Remove(photonView.viewID.ID);
+		}
+	}
+	
     // Update is called once per frame
     public void Update()
     {
@@ -61,6 +77,7 @@ public class NetworkCharacter : Photon.MonoBehaviour
 				{
 					Time.timeScale = 1f;
 					mGameOn = true;
+					TextObject.gameObject.SetActive(false);
 				}
 			}
 			yield return null;
@@ -107,21 +124,23 @@ public class NetworkCharacter : Photon.MonoBehaviour
 		
 		if (!mGameOn && Characters != null)
 		{
-			int readyCount = 0;
+			ReadyCount = 0;
 			int playerCount = Characters.Count;
 			
 			foreach (NetworkCharacter character in Characters.Values)
 			{
 				if (character.mIsReady)
 				{
-					readyCount++;
+					ReadyCount++;
 				}
 			}
-			Debug.Log(readyCount);
-			if (readyCount == playerCount)
+			TextObject.text = string.Format("Waiting for {0} players. Press enter to ready", (Characters.Count - ReadyCount).ToString());
+			if (ReadyCount == playerCount)
 			{
+				TextObject.gameObject.SetActive(false);
 				mGameOn = true;
 				Time.timeScale = 1f;
+				
 			}
 		}
     }
