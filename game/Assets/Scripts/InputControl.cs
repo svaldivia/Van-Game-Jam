@@ -10,10 +10,13 @@ public class InputControl : MonoBehaviour {
 	public float JumpForce;
 	private float mRotation = 0;
 	public float HeartRateChangeRate = 0.01f;
+	public float MaxSpeed;
 	private bool Jumping = false;
 	public float JumpTime;
 	private float timer = 0.25f;
 	public float AnimatorSpeed;
+	public AudioSource HeartBeatSource;
+	public AnimationCurve HeartBeatCurve;
 	
 	// Use this for initialization
 	void Start() 
@@ -28,6 +31,8 @@ public class InputControl : MonoBehaviour {
 	void Update() 
 	{
 		
+		HeartBeatSource.pitch = HeartBeatCurve.Evaluate(HeartRate);
+			
 		HeartRate += HeartRateChangeRate * Time.deltaTime * Mathf.Sign(HeartRate - 0.5f);
 		if(HeartRate < 0 || HeartRate > 1)
 		{
@@ -84,7 +89,7 @@ public class InputControl : MonoBehaviour {
 			animator.SetFloat("Direction", mRotation, DirectionDampTime, Time.deltaTime);	
 			rigidbody.rotation.Set(transform.rotation.x, transform.rotation.y + mRotation * TurnSpeed, transform.rotation.z, transform.rotation.w);
 			Debug.Log(rigidbody.rotation);
-			rigidbody.MovePosition(transform.position + transform.forward * HeartRate * Time.deltaTime);
+			rigidbody.MovePosition(transform.position + transform.forward * HeartRate * MaxSpeed * Time.deltaTime);
 		}   		  
 	}
 }
