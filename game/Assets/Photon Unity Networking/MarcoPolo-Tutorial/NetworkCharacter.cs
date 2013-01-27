@@ -11,12 +11,9 @@ public class NetworkCharacter : Photon.MonoBehaviour
 	private static bool mGameOn = false;
 	public static Dictionary<int, NetworkCharacter> Characters = null;
 	
-	
     public void Awake()
     {
-		
-	//ThirdPersonController myC = GetComponent<ThirdPersonController>();
-       // myC.isControllable = photonView.isMine;
+
 		if (Characters == null)
 		{
 			Characters = new Dictionary<int, NetworkCharacter>();
@@ -42,7 +39,10 @@ public class NetworkCharacter : Photon.MonoBehaviour
 	
 	public void OnDisable()
 	{
-		Characters.Remove(photonView.viewID.ID);
+		if (Characters.ContainsKey(photonView.viewID.ID))
+		{
+			Characters.Remove(photonView.viewID.ID);
+		}
 	}
 	
     // Update is called once per frame
