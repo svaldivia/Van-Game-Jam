@@ -11,7 +11,7 @@ public class NetworkCharacter : Photon.MonoBehaviour
 	private static bool mGameOn = false;
 	public static Dictionary<int, NetworkCharacter> Characters = null;
 	
-		
+	
     public void Awake()
     {
 		
@@ -39,7 +39,12 @@ public class NetworkCharacter : Photon.MonoBehaviour
 		}
 		
     }
-
+	
+	public void OnDisable()
+	{
+		Characters.Remove(photonView.viewID.ID);
+	}
+	
     // Update is called once per frame
     public void Update()
     {
