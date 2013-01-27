@@ -8,7 +8,8 @@ public class InputControl : MonoBehaviour {
 	public float ForwardSpeed = 1.0f;
 	public float LeftSideSpeed = 0.0f;
 	public float RightSideSpeed = 0.0f;
-
+	[SerializeField] private float DistanceTravelled = 0.0f;
+	
 	// Use this for initialization
 	void Start() 
 	{
@@ -35,7 +36,7 @@ public class InputControl : MonoBehaviour {
 					animator.SetBool("Jump", true);
 					if ((ForwardSpeed - 1) > 0)
 					{
-						ForwardSpeed = ForwardSpeed - 1.0f;
+						ForwardSpeed = ForwardSpeed * 0.5f;
 					}
 				}
 				else if (Input.GetKey(KeyCode.LeftShift))
@@ -43,7 +44,7 @@ public class InputControl : MonoBehaviour {
 					animator.SetBool("Dive", true);
 					if ((ForwardSpeed - 1) > 0)
 					{
-						ForwardSpeed = ForwardSpeed - 1.0f;
+						ForwardSpeed = ForwardSpeed * 0.5f;
 					}
 				}		
 			}
@@ -103,6 +104,7 @@ public class InputControl : MonoBehaviour {
 				}				
 			}			
 			transform.position += transform.forward * ForwardSpeed * Time.deltaTime;
+			DistanceTravelled = transform.position.z;
 		}   		  
 	}
 }
