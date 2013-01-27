@@ -31,7 +31,7 @@ public class InputControl : MonoBehaviour {
 	void Update() 
 	{
 		
-		HeartBeatSource.pitch = HeartBeatCurve.Evaluate(HeartRate);
+		//HeartBeatSource.pitch = HeartBeatCurve.Evaluate(HeartRate);
 			
 		HeartRate += HeartRateChangeRate * Time.deltaTime * Mathf.Sign(HeartRate - 0.5f);
 		if(HeartRate < 0 || HeartRate > 1)
