@@ -4,6 +4,10 @@ using System.Collections;
 public class HeartRateItem : MonoBehaviour {
 	
 	public float HeartRateChange;
+	public float RespawnTime;
+	public ParticleSystem ParticleSys;
+	public Collider Coll;
+	
 	
 	private void OnTriggerEnter(Collider other)
 	{
@@ -11,7 +15,17 @@ public class HeartRateItem : MonoBehaviour {
 		if(player != null)
 		{
 			player.HeartRate += HeartRateChange;
-			Destroy(gameObject);
+			Coll.enabled = false;
+			ParticleSys.enableEmission = false;
+			ParticleSys.Clear();
+			StartCoroutine(Respawn());
 		}
+	}
+				
+	private IEnumerator Respawn()
+	{
+		yield return new WaitForSeconds(RespawnTime);
+		Coll.enabled = true;
+		ParticleSys.enableEmission = true;
 	}
 }
