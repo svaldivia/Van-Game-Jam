@@ -4,6 +4,7 @@ using System.Collections;
 public class Menu : MonoBehaviour {
 	
 	public bool isQuit = false;
+	public string loadLevelName = "";
 	
 	void OnMouseEnter()
 	{
@@ -20,7 +21,7 @@ public class Menu : MonoBehaviour {
 		{
 			Application.Quit();
 		}else{
-			Application.LoadLevel(1);
+			Application.LoadLevel(loadLevelName);
 		}
 	}
 }

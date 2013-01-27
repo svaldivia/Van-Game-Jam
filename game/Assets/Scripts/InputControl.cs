@@ -17,6 +17,7 @@ public class InputControl : MonoBehaviour {
 	public float AnimatorSpeed;
 	public AudioSource HeartBeatSource;
 	public AnimationCurve HeartBeatCurve;
+	public string GameOverSceneName = "GameOverMenu";
 	
 	// Use this for initialization
 	void Start() 
@@ -26,7 +27,13 @@ public class InputControl : MonoBehaviour {
 		if(animator.layerCount >= 2)
 			animator.SetLayerWeight(1, 1);
 	}
-		
+	
+	IEnumerator LoadLevel(float delay)
+	{
+		yield return new WaitForSeconds(delay);
+		Application.LoadLevel(GameOverSceneName);
+	}
+	
 	// Update is called once per frame
 	void Update() 
 	{
@@ -34,9 +41,10 @@ public class InputControl : MonoBehaviour {
 		//HeartBeatSource.pitch = HeartBeatCurve.Evaluate(HeartRate);
 			
 		HeartRate += HeartRateChangeRate * Time.deltaTime * Mathf.Sign(HeartRate - 0.5f);
-		if(HeartRate < 0 || HeartRate > 1)
+		if((HeartRate < 0 || HeartRate > 1) && ((Application.loadedLevelName != "Menu") && (Application.loadedLevelName != "GameOverMenu")))
 		{
 			rigidbody.AddForce(new Vector3(0, JumpForce,0));
+			StartCoroutine(LoadLevel(3));			
 		}
 		
 		if (animator)

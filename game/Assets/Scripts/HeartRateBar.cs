@@ -3,7 +3,7 @@ using System.Collections;
 
 public class HeartRateBar : MonoBehaviour {
 	
-	public float heartRate = 0.5f;
+	private float heartRate = 0.5f;
     public Vector2 pos = new Vector2(20,10);
     public Vector2 size = new Vector2(200,20);
     public Texture2D progressBarBackground;
@@ -43,7 +43,7 @@ public class HeartRateBar : MonoBehaviour {
      
     void Update()
     {
-	    if (heartRate > 0 && heartRate < 1)
+	    if (control.HeartRate > 0 && control.HeartRate < 1)
 		{
 			heartRate = control.HeartRate;
 		}
