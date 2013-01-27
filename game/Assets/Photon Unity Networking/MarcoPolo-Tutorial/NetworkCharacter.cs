@@ -77,6 +77,7 @@ public class NetworkCharacter : Photon.MonoBehaviour
 				{
 					Time.timeScale = 1f;
 					mGameOn = true;
+					TextObject.text = "";
 					TextObject.gameObject.SetActive(false);
 				}
 			}
@@ -137,6 +138,7 @@ public class NetworkCharacter : Photon.MonoBehaviour
 			TextObject.text = string.Format("Waiting for {0} players. Press enter to ready", (Characters.Count - ReadyCount).ToString());
 			if (ReadyCount == playerCount)
 			{
+				TextObject.text = "";
 				TextObject.gameObject.SetActive(false);
 				mGameOn = true;
 				Time.timeScale = 1f;
