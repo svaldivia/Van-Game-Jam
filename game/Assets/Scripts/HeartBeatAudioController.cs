@@ -6,7 +6,6 @@ public class HeartBeatAudioController : MonoBehaviour {
 	public InputControl inputControl;
 	public AudioSource HeartBeatSource;
 	public float HeartBeatFrequency;
-	public float HeartBeatSpeed;
 	private float timer = 1;
 	public AnimationCurve HeartBeatFovCurve;
 	public AnimationCurve HeartBeatPitchCurve;

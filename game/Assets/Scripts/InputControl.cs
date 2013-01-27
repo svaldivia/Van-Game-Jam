@@ -88,7 +88,6 @@ public class InputControl : MonoBehaviour {
 			animator.SetFloat("Speed", HeartRate);
 			animator.SetFloat("Direction", mRotation, DirectionDampTime, Time.deltaTime);	
 			rigidbody.rotation.Set(transform.rotation.x, transform.rotation.y + mRotation * TurnSpeed, transform.rotation.z, transform.rotation.w);
-			Debug.Log(rigidbody.rotation);
 			rigidbody.MovePosition(transform.position + transform.forward * HeartRate * MaxSpeed * Time.deltaTime);
 		}   		  
 	}
