@@ -73,7 +73,6 @@ public class NetworkCharacter : Photon.MonoBehaviour
 			if (Input.GetKeyDown(KeyCode.Return))
 			{
 				mIsReady = true;
-				TextObject.text = string.Format("Waiting for {0} players", (Characters.Count - ReadyCount).ToString());
 				if (Characters != null && Characters.Count == 1)
 				{
 					Time.timeScale = 1f;
@@ -135,7 +134,7 @@ public class NetworkCharacter : Photon.MonoBehaviour
 					ReadyCount++;
 				}
 			}
-			TextObject.text = string.Format("Waiting for {0} players", (Characters.Count - ReadyCount).ToString());
+			TextObject.text = string.Format("Waiting for {0} players. Press enter to ready", (Characters.Count - ReadyCount).ToString());
 			if (ReadyCount == playerCount)
 			{
 				TextObject.gameObject.SetActive(false);
