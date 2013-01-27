@@ -24,7 +24,7 @@ public class RandomMatchmaker : Photon.MonoBehaviour
 
     void OnJoinedRoom()
     {
-        PhotonNetwork.Instantiate("Teddy", CharacterPrefab.transform.position, Quaternion.identity, 0);
+        PhotonNetwork.Instantiate(CharacterPrefabName, CharacterPrefab.transform.position, CharacterPrefab.transform.rotation, 0);
     }
 
 }

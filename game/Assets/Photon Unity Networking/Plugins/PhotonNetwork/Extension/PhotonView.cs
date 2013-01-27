@@ -27,7 +27,7 @@ public class PhotonView : Photon.MonoBehaviour
 
     [SerializeField]
     private PhotonViewID ID = new PhotonViewID(0, null);
-
+	public NetworkCharacter Character = null;
     public Component observed;
     public ViewSynchronization synchronization;
     public int group = 0;
@@ -156,6 +156,7 @@ public class PhotonView : Photon.MonoBehaviour
     public void Awake()
     {
         this.Setup();
+		Character = GetComponent<NetworkCharacter>();
     }
 
     private bool ranSetup = false;
@@ -208,7 +209,16 @@ public class PhotonView : Photon.MonoBehaviour
             }
         }
     }
-
+	
+	public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+	{
+		if (Character != null)
+		{
+			
+			Character.OnPhotonSerializeView(stream, info);
+		}
+	}
+	
     void OnDestroy()
     {
         PhotonNetwork.networkingPeer.RemovePhotonView(this, true);
