@@ -49,7 +49,7 @@ public class InputControl : MonoBehaviour {
 	{
 		
 		//HeartBeatSource.pitch = HeartBeatCurve.Evaluate(HeartRate);
-		if (view.isMine)
+		if (view != null && view.isMine)
 		{
 			HeartRate += Time.deltaTime * ((HeartRate - 0.5f) * HeartRateChangeRate + (MinHeartRateChange * Mathf.Sign(HeartRate - 0.5f)) );
 			if((HeartRate < 0 || HeartRate > 1) && ((Application.loadedLevelName != "Menu") && (Application.loadedLevelName != "GameOverMenu")))
@@ -59,7 +59,7 @@ public class InputControl : MonoBehaviour {
 			}
 		}
 		
-		if (animator && view.isMine)
+		if (view != null && animator && view.isMine)
 		{	
 			
 			AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);			
