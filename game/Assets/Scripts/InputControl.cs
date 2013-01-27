@@ -79,14 +79,12 @@ public class InputControl : MonoBehaviour {
 				animator.SetFloat("Direction", 0, 0, Time.deltaTime);	
 				LeftSideSpeed = LeftSideSpeed + 2.0f;
 				RightSideSpeed = 0.0f;
-				transform.position += (-transform.right) * LeftSideSpeed * Time.deltaTime;
 			}
 			else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
 			{
 				animator.SetFloat("Direction", 0, 0, Time.deltaTime);
 				RightSideSpeed = RightSideSpeed + 2.0f;
 				LeftSideSpeed = 0.0f;
-				transform.position += transform.right * RightSideSpeed * Time.deltaTime;
 			}
 			else if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
 			{				
@@ -102,9 +100,10 @@ public class InputControl : MonoBehaviour {
 				{
 					ForwardSpeed = 0;
 				}				
-			}			
+			}
 			transform.position += transform.forward * ForwardSpeed * Time.deltaTime;
 			DistanceTravelled = transform.position.z;
+			rigidbody.MovePosition(transform.position + (transform.forward * ForwardSpeed + transform.right * RightSideSpeed + (-transform.right) * LeftSideSpeed) * Time.deltaTime);
 		}   		  
 	}
 }
