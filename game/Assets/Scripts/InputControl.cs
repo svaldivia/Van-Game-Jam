@@ -3,12 +3,16 @@ using System.Collections;
 
 public class InputControl : MonoBehaviour {
 	
-	protected Animator animator;
-	public bool ApplyGravity = true;
-	public float ForwardSpeed = 1.0f;
-	public float LeftSideSpeed = 0.0f;
-	public float RightSideSpeed = 0.0f;
-
+	protected Animator animator;	
+	public float DirectionDampTime = .25f;
+	public float HeartRate = 0.01f;
+	public float TurnSpeed;
+	public float JumpForce;
+	private float mRotation = 0;
+	public int HeartRateChangeRate = 0;
+	private bool Jumping = false;
+	public float JumpTime;
+	
 	// Use this for initialization
 	void Start() 
 	{
@@ -23,84 +27,50 @@ public class InputControl : MonoBehaviour {
 	{
 		if (animator)
 		{	
-			float v = 1.0f;
-			float h = 0.0f;
 			
 			AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);			
+			
+			if(stateInfo.IsName("Base Layer.Jump") && Jumping)
+			{
+				if(stateInfo.normalizedTime > JumpTime)
+				{
+					rigidbody.AddForce(new Vector3(0,JumpForce,0));
+					Jumping = false;
+				}
+			}
 			
 			if (stateInfo.IsName("Base Layer.Run"))
 			{
 				if (Input.GetKey(KeyCode.Space))
 				{
 					animator.SetBool("Jump", true);
-					if ((ForwardSpeed - 1) > 0)
-					{
-						ForwardSpeed = ForwardSpeed - 1.0f;
-					}
+					Jumping = true;
 				}
-				else if (Input.GetKey(KeyCode.LeftShift))
-				{
-					animator.SetBool("Dive", true);
-					if ((ForwardSpeed - 1) > 0)
-					{
-						ForwardSpeed = ForwardSpeed - 1.0f;
-					}
-				}		
 			}
 			else
 			{
 				animator.SetBool("Jump", false);
-				animator.SetBool("Dive", false);
-            }		
-			
-			if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
-			{
-				v = v * 1.1f;
-				animator.SetFloat("Speed", h*h+v*v);
-				
-				ForwardSpeed = ForwardSpeed + 7.0f;
-			}		
-			/*
-			else if (Input.GetKey(KeyCode.S))
-			{
-				v = v * 1.1f;			
-				animator.SetFloat("Speed", h*h+v*v);
-				
-				if( ForwardSpeed - 5 > 0)
-				{
-					ForwardSpeed = ForwardSpeed - 5;
-				}
 			}
-			*/
 						
 			if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
 			{
-				animator.SetFloat("Direction", 0, 0, Time.deltaTime);	
-				LeftSideSpeed = LeftSideSpeed + 2.0f;
-				RightSideSpeed = 0.0f;
+				mRotation = -1;
 			}
 			else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
 			{
-				animator.SetFloat("Direction", 0, 0, Time.deltaTime);
-				RightSideSpeed = RightSideSpeed + 2.0f;
-				LeftSideSpeed = 0.0f;
+				mRotation = 1;
 			}
 			else if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
 			{				
-				LeftSideSpeed = 0.0f;
-				RightSideSpeed = 0.0f;
+				mRotation = 0;
 			}
+			Debug.Log(mRotation);
 			
-			if (ForwardSpeed > 0 )
-			{
-				ForwardSpeed = ForwardSpeed*0.95f;
-				
-				if (ForwardSpeed < 1)
-				{
-					ForwardSpeed = 0;
-				}				
-			}			
-			rigidbody.MovePosition(transform.position + (transform.forward * ForwardSpeed + transform.right * RightSideSpeed + (-transform.right) * LeftSideSpeed) * Time.deltaTime);
+			animator.SetFloat("Speed", HeartRate);
+			animator.SetFloat("Direction", mRotation, DirectionDampTime, Time.deltaTime);	
+			rigidbody.rotation.Set(transform.rotation.x, transform.rotation.y + mRotation * TurnSpeed, transform.rotation.z, transform.rotation.w);
+			Debug.Log(rigidbody.rotation);
+			rigidbody.MovePosition(transform.position + transform.forward * HeartRate * Time.deltaTime);
 		}   		  
 	}
 }
