@@ -4,7 +4,7 @@ using System.Collections;
 public class InputControl : MonoBehaviour {
 	
 	protected Animator animator;	
-	public float DirectionDampTime = .25f;
+	public float DirectionDampTime = .10f;
 	public float HeartRate = 0.01f;
 	public float TurnSpeed;
 	public float JumpForce;
@@ -13,7 +13,7 @@ public class InputControl : MonoBehaviour {
 	public float MaxSpeed;
 	private bool Jumping = false;
 	public float JumpTime;
-	private float timer = 0.25f;
+	public float Timer = 0.0f;
 	public float AnimatorSpeed;
 	public AudioSource HeartBeatSource;
 	public AnimationCurve HeartBeatCurve;
@@ -89,6 +89,10 @@ public class InputControl : MonoBehaviour {
 			animator.SetFloat("Direction", mRotation, DirectionDampTime, Time.deltaTime);	
 			rigidbody.rotation.Set(transform.rotation.x, transform.rotation.y + mRotation * TurnSpeed, transform.rotation.z, transform.rotation.w);
 			rigidbody.MovePosition(transform.position + transform.forward * HeartRate * MaxSpeed * Time.deltaTime);
-		}   		  
+		}
+		if (HeartRate > 0 && HeartRate < 1)
+		{
+			Timer += Time.deltaTime;
+		}
 	}
 }
