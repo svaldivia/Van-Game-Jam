@@ -5,11 +5,13 @@ public class HeartRateBar : MonoBehaviour {
 	
 	private float heartRate = 0.5f;
     public Vector2 pos = new Vector2(20,10);
-    public Vector2 size = new Vector2(200,20);
+    public Vector2 size = new Vector2(200,200);
     public Texture2D progressBarBackground;
 	public Texture line;
 	public Rect position;
 	public InputControl control;
+	public int SmallTextSize;
+	public int LargeTextSize;
 	
     void OnGUI()
 	{
@@ -26,19 +28,21 @@ public class HeartRateBar : MonoBehaviour {
 		    GUI.Box(position, line);
 		    GUI.EndGroup();
 			GUI.EndGroup();
-			GUILayout.BeginArea(new Rect(pos.x + size.x + 2.0f, 10.0f, 50.0f, 20.0f));
+			GUILayout.BeginArea(new Rect(pos.x + size.x + 2.0f, 10.0f, 200.0f, 200.0f));
 			if( heartRate > 0.25 && heartRate < 0.75 )
 			{
 				GUI.contentColor = Color.green;
+				GUI.skin.label.fontSize = SmallTextSize;
 			}
 			else
 			{
 				GUI.contentColor = Color.red;
+				GUI.skin.label.fontSize = LargeTextSize;
 			}
 			GUILayout.Label(string.Format("{0:0}", Mathf.Clamp(heartRate*100.0f, 0.0f, 100.0f)));
 		    GUILayout.EndArea();
 			GUI.contentColor = Color.white;
-			GUILayout.BeginArea(new Rect(pos.x + 2.0f, 30.0f, 200.0f, 20.0f));
+			GUILayout.BeginArea(new Rect(pos.x + 2.0f, 30.0f, 200.0f, 200.0f));
 			GUILayout.Label(string.Format ("Score: {0:0}", Mathf.FloorToInt(control.Timer*1000).ToString()));
 			GUILayout.EndArea();
 		}
