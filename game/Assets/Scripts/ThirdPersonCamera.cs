@@ -12,8 +12,9 @@ public class ThirdPersonCamera : MonoBehaviour
 	
 	Transform follow;
 	
-	void Start(){
-		follow = GameObject.FindWithTag ("Player").transform;	
+	void Start()
+	{
+		follow = transform.parent;
 	}
 	
 	void LateUpdate ()

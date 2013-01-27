@@ -12,8 +12,8 @@ public class HeartBeatAudioController : MonoBehaviour {
 	
 	private void Update()
 	{
-		Camera.mainCamera.fov = 50 + 5 * HeartBeatFovCurve.Evaluate(timer);
-		HeartBeatSource.pitch = HeartBeatPitchCurve.Evaluate(inputControl.HeartRate);
+		Camera.mainCamera.fov = Mathf.Clamp(50 + 5 * HeartBeatFovCurve.Evaluate(timer), 50, 60);
+		HeartBeatSource.pitch = HeartBeatPitchCurve.Evaluate(inputControl.EffectiveHeartRate);
 		if(timer <= 0)
 		{
 			timer = HeartBeatFrequency;	

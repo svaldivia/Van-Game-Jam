@@ -3,7 +3,7 @@ using System.Collections;
 
 public class HeartRateItem : MonoBehaviour {
 	
-	public float HeartRateChange;
+	public bool HeartRateChange;
 	public float RespawnTime;
 	public ParticleSystem ParticleSys;
 	public Collider Coll;
@@ -14,7 +14,15 @@ public class HeartRateItem : MonoBehaviour {
 		InputControl player = other.transform.parent.GetComponent<InputControl>();
 		if(player != null)
 		{
-			player.HeartRate += HeartRateChange;
+			if(player.HeartRate > 0.5 && !HeartRateChange)
+			{
+				player.HeartRate = 0.45f;
+			}
+			else if(player.HeartRate < 0.5 && HeartRateChange)
+			{
+				player.HeartRate = 0.55f;
+			}
+			
 			Coll.enabled = false;
 			ParticleSys.enableEmission = false;
 			ParticleSys.Clear();

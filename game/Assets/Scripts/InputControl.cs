@@ -10,6 +10,7 @@ public class InputControl : MonoBehaviour {
 	public float JumpForce;
 	private float mRotation = 0;
 	public float HeartRateChangeRate = 0.01f;
+	public float MinHeartRateChange = 0.01f;
 	public float MaxSpeed;
 	private bool Jumping = false;
 	public float JumpTime;
@@ -18,6 +19,7 @@ public class InputControl : MonoBehaviour {
 	public AudioSource HeartBeatSource;
 	public AnimationCurve HeartBeatCurve;
 	public string GameOverSceneName = "GameOverMenu";
+	public PhotonView view = null;
 	
 	// Use this for initialization
 	void Start() 
@@ -34,20 +36,30 @@ public class InputControl : MonoBehaviour {
 		Application.LoadLevel(GameOverSceneName);
 	}
 	
+	public float EffectiveHeartRate
+	{
+		get
+		{
+			return (-(Mathf.Pow(Mathf.Clamp(Mathf.Abs(2 * (HeartRate -0.5f)), 0, 1), 0.5f)) + 1);
+		}
+	}
+	
 	// Update is called once per frame
 	void Update() 
 	{
 		
 		//HeartBeatSource.pitch = HeartBeatCurve.Evaluate(HeartRate);
-			
-		HeartRate += HeartRateChangeRate * Time.deltaTime * Mathf.Sign(HeartRate - 0.5f);
-		if((HeartRate < 0 || HeartRate > 1) && ((Application.loadedLevelName != "Menu") && (Application.loadedLevelName != "GameOverMenu")))
+		if (view.isMine)
 		{
-			rigidbody.AddForce(new Vector3(0, JumpForce,0));
-			StartCoroutine(LoadLevel(3));			
+			HeartRate += Time.deltaTime * ((HeartRate - 0.5f) * HeartRateChangeRate + (MinHeartRateChange * Mathf.Sign(HeartRate - 0.5f)) );
+			if((HeartRate < 0 || HeartRate > 1) && ((Application.loadedLevelName != "Menu") && (Application.loadedLevelName != "GameOverMenu")))
+			{
+				rigidbody.AddForce(new Vector3(0, JumpForce,0));
+				StartCoroutine(LoadLevel(3));			
+			}
 		}
 		
-		if (animator)
+		if (animator && view.isMine)
 		{	
 			
 			AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);			
@@ -71,7 +83,8 @@ public class InputControl : MonoBehaviour {
 					Jumping = true;
 					
 				}
-				animator.speed = Mathf.Sqrt(HeartRate * 2);
+				animator.speed = EffectiveHeartRate;
+				//Debug.Log(EffectiveHeartRate);	
 			}
 			else
 			{
@@ -91,12 +104,11 @@ public class InputControl : MonoBehaviour {
 			{				
 				mRotation = 0;
 			}
-			Debug.Log(mRotation);
 			
-			animator.SetFloat("Speed", HeartRate);
+			animator.SetFloat("Speed", EffectiveHeartRate);
 			animator.SetFloat("Direction", mRotation, DirectionDampTime, Time.deltaTime);	
-			rigidbody.rotation.Set(transform.rotation.x, transform.rotation.y + mRotation * TurnSpeed, transform.rotation.z, transform.rotation.w);
-			rigidbody.MovePosition(transform.position + transform.forward * HeartRate * MaxSpeed * Time.deltaTime);
+			rigidbody.rotation.Set(transform.rotation.x, transform.rotation.y + mRotation * TurnSpeed * Time.deltaTime, transform.rotation.z, transform.rotation.w);
+			rigidbody.MovePosition(transform.position + transform.forward * EffectiveHeartRate * MaxSpeed * Time.deltaTime);
 		}
 		if (HeartRate > 0 && HeartRate < 1)
 		{
